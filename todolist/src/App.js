@@ -1,23 +1,50 @@
 import { useState } from "react";
+import Sunset from "./Sunset.jpg";
+import "./App.css";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [display, setDisplay] = useState("");
+  const [list, setList] = useState([]);
 
-  function addText(event) {
+  function handle(event) {
     setInputText(event.target.value);
   }
 
-  function displayText() {
-    setDisplay(inputText);
+  function addText() {
+    if (inputText === "") return;
+
+    setList([inputText].concat(list));
+    setInputText("");
   }
 
   return (
-    <div>
-      <input type="text" onChange={addText} />
-      <button onClick={displayText}>click</button>
+    <div className="bg-container">
+      <img src={Sunset} alt="bg" className="bg-img" />
 
-      <p>{display}</p>
+      <div className="todo-box">
+        {/* input + button */}
+        <div className="add-task">
+  <input
+    type="text"
+    value={inputText}
+    onChange={handle}
+    placeholder="Add your task"
+  />
+  <button onClick={addText}>ADD</button>
+</div>
+
+{list.map(function (item, index) {
+  return (
+    <p key={index} className="output">
+      <input type="radio" className="radio" />
+      {item}
+    </p>
+  );
+})}
+
+        
+    
+      </div>
     </div>
   );
 }
